@@ -1,95 +1,88 @@
 :root {
-    --primary: #818cf8;
-    --card-bg: rgba(15, 23, 42, 0.8);
-    --text-main: #f8fafc;
-    --text-dim: #94a3b8;
+    --bg: #0f172a;
+    --panel: rgba(15, 23, 42, 0.7);
+    --accent: #6366f1;
+    --text: #f8fafc;
+    --border: rgba(255, 255, 255, 0.1);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
 body {
     height: 100vh;
+    background: url('https://images.unsplash.com/photo-1477346611705-65d1883cee1e?q=80&w=2070') center/cover;
+    color: var(--text);
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070') no-repeat center center/cover;
+}
+
+.bg-blur {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px); z-index: -1;
+}
+
+.app-container {
+    width: 1000px; height: 650px;
+    background: var(--panel);
+    display: flex; border-radius: 20px;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+    border: 1px solid var(--border);
     overflow: hidden;
 }
 
-.bg-overlay {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    z-index: -1;
+/* Sidebar */
+.sidebar {
+    width: 300px; padding: 40px;
+    background: rgba(0, 0, 0, 0.2);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
 }
 
-.calendar-card {
-    display: flex;
-    width: 950px;
-    height: 600px;
-    background: var(--card-bg);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-    color: var(--text-main);
-    overflow: hidden;
+.date-display h1 { font-size: 80px; font-weight: 300; line-height: 1; color: var(--accent); }
+.date-display p { font-size: 18px; margin-bottom: 40px; opacity: 0.7; }
+
+.event-section h3 { font-size: 12px; letter-spacing: 2px; opacity: 0.5; margin-bottom: 15px; }
+
+#event-list-display { flex-grow: 1; overflow-y: auto; }
+.event-item {
+    background: rgba(255,255,255,0.05); padding: 10px;
+    border-radius: 8px; border-left: 3px solid var(--accent);
+    margin-bottom: 8px; font-size: 14px;
 }
 
-/* Sol Panel (Etkinlikler) */
-.side-info {
-    width: 30%;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid rgba(255,255,255,0.05);
+.add-event-box { display: flex; gap: 8px; margin-top: 20px; }
+.add-event-box input {
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    padding: 10px; color: white; border-radius: 8px; width: 100%;
+}
+.add-event-box button {
+    background: var(--accent); border: none; padding: 10px 15px;
+    color: white; border-radius: 8px; cursor: pointer;
 }
 
-.current-time { font-size: 1.1rem; opacity: 0.6; margin-bottom: 10px; }
-.big-day { font-size: 6rem; font-weight: 700; line-height: 1; color: var(--primary); }
-.big-month { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
+/* Calendar */
+.calendar-main { flex-grow: 1; padding: 40px; }
+.cal-header { display: flex; justify-content: space-between; margin-bottom: 30px; }
+.nav button { background: none; border: 1px solid var(--border); color: white; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
+.nav button:hover { background: var(--accent); }
 
-.event-add { display: flex; gap: 5px; margin-bottom: 15px; }
-.event-add input {
-    background: rgba(255,255,255,0.1);
-    border: none; padding: 8px; color: white; border-radius: 5px; width: 70%;
-}
-.event-add button {
-    background: var(--primary); border: none; padding: 8px; color: white; border-radius: 5px; cursor: pointer;
-}
-
-#eventList { list-style: none; overflow-y: auto; font-size: 0.9rem; }
-#eventList li { background: rgba(255,255,255,0.05); padding: 8px; margin-bottom: 5px; border-radius: 4px; border-left: 3px solid var(--primary); }
-
-/* Sağ Panel (Takvim) */
-.calendar-main { width: 70%; padding: 40px; }
-.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-.nav-btns button { background: rgba(255,255,255,0.1); border: none; color: white; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
-.nav-btns button:hover { background: var(--primary); }
-
-.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--text-dim); margin-bottom: 20px; font-weight: 600; }
-.days-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; opacity: 0.4; font-size: 13px; margin-bottom: 15px; }
+.days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
 
 .day {
-    aspect-ratio: 1.2;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    cursor: pointer; border-radius: 10px; transition: 0.2s; position: relative;
+    aspect-ratio: 1.2; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; border-radius: 12px;
+    cursor: pointer; position: relative; transition: 0.2s;
 }
 
 .day:hover { background: rgba(255,255,255,0.1); }
-.today { background: var(--primary) !important; font-weight: bold; }
+.today { border: 2px solid var(--accent); }
+.selected { background: var(--accent) !important; font-weight: bold; }
 
-/* Özel Gün Noktası */
-.special-day::after {
-    content: '';
-    position: absolute; bottom: 8px; width: 6px; height: 6px;
-    background: #fbbf24; border-radius: 50%;
+.has-event::after {
+    content: ''; position: absolute; bottom: 8px; width: 4px; height: 4px;
+    background: #fff; border-radius: 50%;
 }
 
-/* Tooltip (Fare üstüne gelince) */
-.day[title]:hover::before {
-    content: attr(title);
-    position: absolute; top: -35px; background: #334155;
-    padding: 5px 10px; border-radius: 5px; font-size: 0.7rem; white-space: nowrap; z-index: 10;
-}
+.special-day { color: #fbbf24; }
