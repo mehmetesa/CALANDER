@@ -1,0 +1,99 @@
+:root {
+    --primary: #4f46e5;
+    --bg: #f3f4f6;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --white: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg);
+}
+
+.calendar-card {
+    display: flex;
+    width: 900px;
+    height: 550px;
+    background: var(--white);
+    border-radius: 30px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Sol Panel */
+.side-info {
+    width: 35%;
+    background: var(--primary);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.current-time { font-size: 1.2rem; opacity: 0.8; margin-bottom: 20px; font-weight: 300; }
+.big-day { font-size: 8rem; font-weight: 700; line-height: 1; }
+.big-month { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+
+/* Sağ Panel */
+.calendar-main { width: 65%; padding: 40px; background: var(--white); }
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.calendar-header h2 { font-size: 1.5rem; color: var(--text-dark); }
+
+.nav-btns button {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.nav-btns button:hover { background: var(--primary); color: white; }
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: var(--text-light);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.days-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+}
+
+.day {
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 1rem;
+    color: var(--text-dark);
+    transition: 0.2s;
+}
+
+.day:hover:not(.empty) { background: #eef2ff; color: var(--primary); }
+.today { background: var(--primary) !important; color: white !important; font-weight: bold; }
+.empty { cursor: default; }
