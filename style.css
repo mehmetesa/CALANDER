@@ -1,9 +1,8 @@
 :root {
-    --primary: #4f46e5;
-    --bg: #f3f4f6;
-    --text-dark: #1f2937;
-    --text-light: #6b7280;
-    --white: #ffffff;
+    --primary: #818cf8;
+    --card-bg: rgba(15, 23, 42, 0.8);
+    --text-main: #f8fafc;
+    --text-dim: #94a3b8;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
@@ -13,87 +12,84 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--bg);
+    background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070') no-repeat center center/cover;
+    overflow: hidden;
+}
+
+.bg-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    z-index: -1;
 }
 
 .calendar-card {
     display: flex;
-    width: 900px;
-    height: 550px;
-    background: var(--white);
-    border-radius: 30px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+    width: 950px;
+    height: 600px;
+    background: var(--card-bg);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    color: var(--text-main);
     overflow: hidden;
 }
 
-/* Sol Panel */
+/* Sol Panel (Etkinlikler) */
 .side-info {
-    width: 35%;
-    background: var(--primary);
-    color: var(--white);
+    width: 30%;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px;
+    border-right: 1px solid rgba(255,255,255,0.05);
 }
 
-.current-time { font-size: 1.2rem; opacity: 0.8; margin-bottom: 20px; font-weight: 300; }
-.big-day { font-size: 8rem; font-weight: 700; line-height: 1; }
-.big-month { font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px; }
+.current-time { font-size: 1.1rem; opacity: 0.6; margin-bottom: 10px; }
+.big-day { font-size: 6rem; font-weight: 700; line-height: 1; color: var(--primary); }
+.big-month { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
 
-/* Sağ Panel */
-.calendar-main { width: 65%; padding: 40px; background: var(--white); }
-
-.calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
+.event-add { display: flex; gap: 5px; margin-bottom: 15px; }
+.event-add input {
+    background: rgba(255,255,255,0.1);
+    border: none; padding: 8px; color: white; border-radius: 5px; width: 70%;
+}
+.event-add button {
+    background: var(--primary); border: none; padding: 8px; color: white; border-radius: 5px; cursor: pointer;
 }
 
-.calendar-header h2 { font-size: 1.5rem; color: var(--text-dark); }
+#eventList { list-style: none; overflow-y: auto; font-size: 0.9rem; }
+#eventList li { background: rgba(255,255,255,0.05); padding: 8px; margin-bottom: 5px; border-radius: 4px; border-left: 3px solid var(--primary); }
 
-.nav-btns button {
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    padding: 8px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.2s;
-}
+/* Sağ Panel (Takvim) */
+.calendar-main { width: 70%; padding: 40px; }
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+.nav-btns button { background: rgba(255,255,255,0.1); border: none; color: white; padding: 10px 15px; border-radius: 8px; cursor: pointer; }
+.nav-btns button:hover { background: var(--primary); }
 
-.nav-btns button:hover { background: var(--primary); color: white; }
-
-.weekdays {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    text-align: center;
-    color: var(--text-light);
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-}
-
-.days-container {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 10px;
-}
+.weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; color: var(--text-dim); margin-bottom: 20px; font-weight: 600; }
+.days-container { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
 
 .day {
-    aspect-ratio: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 12px;
-    font-size: 1rem;
-    color: var(--text-dark);
-    transition: 0.2s;
+    aspect-ratio: 1.2;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    cursor: pointer; border-radius: 10px; transition: 0.2s; position: relative;
 }
 
-.day:hover:not(.empty) { background: #eef2ff; color: var(--primary); }
-.today { background: var(--primary) !important; color: white !important; font-weight: bold; }
-.empty { cursor: default; }
+.day:hover { background: rgba(255,255,255,0.1); }
+.today { background: var(--primary) !important; font-weight: bold; }
+
+/* Özel Gün Noktası */
+.special-day::after {
+    content: '';
+    position: absolute; bottom: 8px; width: 6px; height: 6px;
+    background: #fbbf24; border-radius: 50%;
+}
+
+/* Tooltip (Fare üstüne gelince) */
+.day[title]:hover::before {
+    content: attr(title);
+    position: absolute; top: -35px; background: #334155;
+    padding: 5px 10px; border-radius: 5px; font-size: 0.7rem; white-space: nowrap; z-index: 10;
+}
